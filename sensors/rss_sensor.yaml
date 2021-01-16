@@ -1,0 +1,10 @@
+  class_name: "RssSensor"
+  entry_point: "rss_sensor.py"
+  description: "Update sensor that emits triggers when share new feed."
+  pool_interval: 5
+  trigger_types:
+    -
+      name: "new_update"
+      description: "Trigger which indicates that a new update has been detected"
+      payload_schema:
+        type: "object"

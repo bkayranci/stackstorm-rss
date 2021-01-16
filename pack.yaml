@@ -1,7 +1,7 @@
 ---
-ref: exchange_template
-name: exchange_template
-description: Exchange Template
+ref: rss_service
+name: rss
+description: RSS Package
 version: 0.1.0
-author: Stanley
-email: info@stackstorm.com
+author: Turkalp Burak Kayrancioglu
+email: bkayranci@gmail.com
