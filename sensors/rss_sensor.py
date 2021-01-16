@@ -27,7 +27,7 @@ class RssSensor(PollingSensor):
                 if (self._last_entry_id == entries[0]):
                     break
                 self._dispatch_trigger(entry)
-            self._last_entry_id != entries[0].id
+            self._last_entry_id = entries[0].id
 
 
     def update_trigger(self):
