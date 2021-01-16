@@ -38,8 +38,10 @@ class RssSensor(PollingSensor):
         pass
 
     def _dispatch_trigger(self, update):
-        
         self._trigger_name = 'new_update'
         self._trigger_pack = 'rss'
+        for key, value in update.items():
+            if type(value) not in [str, unicode, dict, list]:
+                del update[key]
         trigger = '.'.join([self._trigger_pack, self._trigger_name])
         self.sensor_service.dispatch(trigger, dict(update))
