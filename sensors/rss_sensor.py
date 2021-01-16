@@ -3,7 +3,13 @@ from st2reactor.sensor.base import PollingSensor
 
 
 class RssSensor(PollingSensor):
-
+    def __init__(self, sensor_service, config):
+        super(RssSensor, self).__init__(sensor_service=sensor_service,
+                                             config=config)
+        self._trigger_name = 'new_update'
+        self._trigger_pack = 'rss'
+        self._trigger_ref = '.'.join([self._trigger_pack, self._trigger_name])
+    
     def setup(self):
         self._last_entry_id = None
 
@@ -33,7 +39,6 @@ class RssSensor(PollingSensor):
     def _dispatch_trigger(self, update):
         
         self._trigger_name = 'new_update'
-        self._trigger_pack = 'rss_service'
-        self._trigger_ref = '.'.join([self._trigger_pack, self._trigger_name])
-
-        self._sensor_service.dispatch(self._trigger_ref, dict(update))
+        self._trigger_pack = self._config['name']
+        trigger = '.'.join([self._trigger_pack, self._trigger_name])
+        self.sensor_service.dispatch(trigger, dict(update))

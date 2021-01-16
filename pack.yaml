@@ -1,5 +1,4 @@
 ---
-ref: rss_service
 name: rss
 description: RSS Package
 version: 0.1.0
