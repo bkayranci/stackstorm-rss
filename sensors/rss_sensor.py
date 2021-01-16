@@ -23,7 +23,7 @@ class RssSensor(PollingSensor):
         feeds = feedparser.parse(self.config['feed_url'])
         entries = feeds.entries
         if len(entries) > 0 and self._last_entry_id != entries[0]:
-            for entry in entries:
+            for entry in reversed(entries):
                 if (self._last_entry_id == entries[0].id):
                     break
                 self._dispatch_trigger(entry)
