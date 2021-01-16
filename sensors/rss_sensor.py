@@ -42,16 +42,12 @@ class RssSensor(PollingSensor):
     def remove_trigger(self):
         pass
 
-    def __time_struct_to_iso_format(self, time_struct):
-        dt = datetime.fromtimestamp(mktime(time_struct))
-        return dt.isoformat()
-
     def _dispatch_trigger(self, update):
         self._trigger_name = 'new_update'
         self._trigger_pack = 'rss'
-        update['published_parsed'] = self.__time_struct_to_iso_format(update['published_parsed'])
-        update['updated_parsed'] = self.__time_struct_to_iso_format(update['updated_parsed'])
-        update['created_parsed'] = self.__time_struct_to_iso_format(update['created_parsed'])
-        update['expired_parsed'] = self.__time_struct_to_iso_format(update['expired_parsed'])
+        del update['published_parsed']
+        del update['updated_parsed']
+        del update['created_parsed']
+        del update['expired_parsed']
         trigger = '.'.join([self._trigger_pack, self._trigger_name])
         self.sensor_service.dispatch(trigger, dict(json.loads(json.dumps(update))))
