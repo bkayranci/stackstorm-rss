@@ -46,5 +46,7 @@ class RssSensor(PollingSensor):
                 del update[key]
             if type(value) == unicode:
                 update[key] = value.encode('utf-8')
+            if type(value) == feedparser.FeedParserDict:
+                update[key] = dict(value)
         trigger = '.'.join([self._trigger_pack, self._trigger_name])
-        self.sensor_service.dispatch(trigger, dict(update))
+        self.sensor_service.dispatch(trigger, update)
