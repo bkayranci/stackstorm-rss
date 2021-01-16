@@ -1,5 +1,9 @@
 from enum import unique
 import feedparser
+from datetime import datetime
+from time import mktime
+import json
+
 from st2reactor.sensor.base import PollingSensor
 
 
@@ -38,15 +42,16 @@ class RssSensor(PollingSensor):
     def remove_trigger(self):
         pass
 
+    def __time_struct_to_iso_format(self, time_struct):
+        dt = datetime.fromtimestamp(mktime(time_struct))
+        return dt.isoformat()
+
     def _dispatch_trigger(self, update):
         self._trigger_name = 'new_update'
         self._trigger_pack = 'rss'
-        for key, value in update.items():
-            if type(value) not in [str, unicode, dict, list]:
-                del update[key]
-            if type(value) == unicode:
-                update[key] = value.encode('utf-8')
-            if type(value) == feedparser.FeedParserDict:
-                update[key] = dict(value)
+        update['published_parsed'] = self.__time_struct_to_iso_format(update['published_parsed'])
+        update['updated_parsed'] = self.__time_struct_to_iso_format(update['updated_parsed'])
+        update['created_parsed'] = self.__time_struct_to_iso_format(update['created_parsed'])
+        update['expired_parsed'] = self.__time_struct_to_iso_format(update['expired_parsed'])
         trigger = '.'.join([self._trigger_pack, self._trigger_name])
-        self.sensor_service.dispatch(trigger, update)
+        self.sensor_service.dispatch(trigger, dict(json.loads(json.dumps(update))))
