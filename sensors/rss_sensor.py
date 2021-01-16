@@ -1,3 +1,4 @@
+from enum import unique
 import feedparser
 from st2reactor.sensor.base import PollingSensor
 
@@ -43,5 +44,7 @@ class RssSensor(PollingSensor):
         for key, value in update.items():
             if type(value) not in [str, unicode, dict, list]:
                 del update[key]
+            if type(value) == unicode:
+                update[key] = value.encode('utf-8')
         trigger = '.'.join([self._trigger_pack, self._trigger_name])
         self.sensor_service.dispatch(trigger, dict(update))
