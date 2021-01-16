@@ -9,7 +9,8 @@ class RssSensor(PollingSensor):
         self._trigger_name = 'new_update'
         self._trigger_pack = 'rss'
         self._trigger_ref = '.'.join([self._trigger_pack, self._trigger_name])
-    
+        self._config = config
+
     def setup(self):
         self._last_entry_id = None
 
@@ -39,6 +40,6 @@ class RssSensor(PollingSensor):
     def _dispatch_trigger(self, update):
         
         self._trigger_name = 'new_update'
-        self._trigger_pack = self._config['name']
+        self._trigger_pack = 'rss'
         trigger = '.'.join([self._trigger_pack, self._trigger_name])
         self.sensor_service.dispatch(trigger, dict(update))
