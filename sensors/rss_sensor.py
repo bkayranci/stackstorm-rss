@@ -10,13 +10,13 @@ class RssSensor(PollingSensor):
         self._trigger_name = 'new_update'
         self._trigger_pack = 'rss'
         self._trigger_ref = '.'.join([self._trigger_pack, self._trigger_name])
-        self._config = config
+        self.config = config
 
     def setup(self):
         self._last_entry_id = None
 
     def poll(self):
-        feeds = feedparser.parse(self._config['feed_url'])
+        feeds = feedparser.parse(self.config['feed_url'])
         entries = feeds.entries
         if len(entries) > 0 and self._last_entry_id != entries[0]:
             for entry in entries:
