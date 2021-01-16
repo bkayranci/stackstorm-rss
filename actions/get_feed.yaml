@@ -1,0 +1,11 @@
+---
+  name: "get_feed"
+  runner_type: "python-script"
+  description: "get feed from url"
+  enabled: true
+  entry_point: "get_feed.py"
+  parameters:
+    feed_url:
+      type: "string"
+      description: "feed url"
+      required: true

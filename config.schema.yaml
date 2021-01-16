@@ -1,7 +1,6 @@
 ---
   feed_url:
-    description: "RSS url"
+    description: "Feed url"
     type: "string"
     secret: false
     required: true
-    default: ""
