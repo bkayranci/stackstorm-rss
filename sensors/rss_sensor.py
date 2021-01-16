@@ -45,9 +45,9 @@ class RssSensor(PollingSensor):
     def _dispatch_trigger(self, update):
         self._trigger_name = 'new_update'
         self._trigger_pack = 'rss'
-        del update['published_parsed']
-        del update['updated_parsed']
-        del update['created_parsed']
-        del update['expired_parsed']
+        if 'published_parsed' in update: del update['published_parsed']
+        if 'updated_parsed' in update: del update['updated_parsed']
+        if 'created_parsed' in update: del update['created_parsed']
+        if 'expired_parsed' in update: del update['expired_parsed']
         trigger = '.'.join([self._trigger_pack, self._trigger_name])
         self.sensor_service.dispatch(trigger, dict(json.loads(json.dumps(update))))
