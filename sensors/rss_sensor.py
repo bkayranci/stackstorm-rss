@@ -24,13 +24,13 @@ class RssSensor(PollingSensor):
         entries = feeds.entries
         if len(entries) > 0 and self._last_entry_id != entries[0]:
             for entry in entries:
-                if (self._last_entry_id == entries[0]):
+                if (self._last_entry_id == entries[0].id):
                     break
                 self._dispatch_trigger(entry)
             self._last_entry_id = entries[0].id
 
 
-    def update_trigger(self):
+    def update_trigger(self, **kwargs):
         pass
 
     def add_trigger(self, trigger):
